@@ -2,8 +2,6 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { HelloWorldModule } from '@/hello-world/hello-world.module';
 import { coreConfig, validateCoreEnvVars } from '@/core/configs/core.config';
-import { LocalConfigModule } from './local-config/local-config.module';
-import { NoLocalConfigModule } from './no-local-config/no-local-config.module';
 
 @Module({
   imports: [
@@ -16,8 +14,6 @@ import { NoLocalConfigModule } from './no-local-config/no-local-config.module';
       // cache: true,
     }),
     HelloWorldModule,
-    LocalConfigModule,
-    NoLocalConfigModule,
   ],
 })
 export class AppModule {}
