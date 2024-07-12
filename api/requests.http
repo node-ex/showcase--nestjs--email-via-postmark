@@ -1,0 +1,9 @@
+POST http://localhost:3000/postmark
+content-type: application/json
+
+{
+    "recipient": {
+        "email": "pavel.balashov@pentahospitals.com",
+        "name": "Johnny Carrot"
+    }
+}
