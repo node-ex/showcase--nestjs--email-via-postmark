@@ -9,11 +9,13 @@ import { z } from 'zod';
  */
 
 const CORE_ENV_VARS = {
-  GLOBAL_SECRET: 'GLOBAL_SECRET',
+  POSTMARK_SERVER_API_TOKEN: 'POSTMARK_SERVER_API_TOKEN',
+  POSTMARK_SENDER_EMAIL: 'POSTMARK_SENDER_EMAIL',
 } as const;
 
 const CoreEnvVarsSchema = z.object({
-  [CORE_ENV_VARS.GLOBAL_SECRET]: z.string(),
+  [CORE_ENV_VARS.POSTMARK_SERVER_API_TOKEN]: z.string(),
+  [CORE_ENV_VARS.POSTMARK_SENDER_EMAIL]: z.string(),
 });
 
 export function validateCoreEnvVars(env: Record<string, string | undefined>) {
@@ -29,7 +31,10 @@ export function validateCoreEnvVars(env: Record<string, string | undefined>) {
 const CORE_CONFIG_NAMESPACE = 'core';
 
 const CoreConfigSchema = z.object({
-  globalSecret: z.string(),
+  postmark: z.object({
+    serverApiToken: z.string(),
+    senderEmail: z.string(),
+  }),
 });
 
 type CoreConfig = z.infer<typeof CoreConfigSchema>;
@@ -42,6 +47,9 @@ export const coreConfig = registerAs(
   CORE_CONFIG_NAMESPACE,
   () =>
     ({
-      globalSecret: process.env[CORE_ENV_VARS.GLOBAL_SECRET],
+      postmark: {
+        serverApiToken: process.env[CORE_ENV_VARS.POSTMARK_SERVER_API_TOKEN],
+        senderEmail: process.env[CORE_ENV_VARS.POSTMARK_SENDER_EMAIL],
+      },
     }) as CoreConfig,
 );
